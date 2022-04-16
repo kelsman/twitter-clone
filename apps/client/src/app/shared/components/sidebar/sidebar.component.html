@@ -1,0 +1,43 @@
+<nav
+  class="hidden sm:flex flex-col items-center h-full p-2 xl:px-10 xl:w-[340px] xl:items-start fixed"
+>
+  <!--Bird  Logo Icon -->
+  <div
+    class="flex items-center justify-center xl:ml-[28px] w-14 h-14 mb-2 hover:rounded-full hover:bg-[#15202b]"
+  >
+    <img src="https://rb.gy/ogau5a" class="w-[30px] h-[30px]" />
+  </div>
+
+  <!-- menu icons list -->
+  <section class="space-y-2.5 xl:ml-4">
+    <div
+      class="text-[#d9d9d9] flex items-center justify-center xl:justify-start space-x-3 group icon__wrapper"
+      *ngFor="let icon of sidebarIconsList"
+    >
+      <ng-icon [name]="icon.name" size="28" class="h-7 w-6"></ng-icon>
+      <h4 class="text-group text-xl hidden xl:inline">
+        {{ icon.text | titlecase }}
+      </h4>
+    </div>
+  </section>
+
+  <!-- New Tweet Button -->
+  <button
+    class="hidden xl:block mx-auto bg-[#1d9bf0] min-h-[52px] mt-4 text-white rounded-full w-[90%] h-[52px] font-bold shadow-md hover:bg-[#1a8cd8]"
+  >
+    <a href="#" class="">Tweet</a>
+  </button>
+
+  <!-- Profile Image and Name -->
+  <div class="flex p-[12px] items-center mt-auto text-white w-full">
+    <!-- placeholder image -->
+    <div class="bg-blue-700 rounded-full w-8 h-8 mr-3"></div>
+    <div class="hidden xl:flex flex-col text-sm">
+      <span class="font-bold">Kelvin Ose</span>
+      <span>@KelvinOse</span>
+    </div>
+    <h4 class="hidden xl:block ml-auto">
+      <ng-icon name="hero-dots-horizontal" size="16"></ng-icon>
+    </h4>
+  </div>
+</nav>

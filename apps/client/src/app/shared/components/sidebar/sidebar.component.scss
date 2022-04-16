@@ -1,0 +1,12 @@
+.icon__wrapper {
+  color: rgb(231, 233, 234);
+
+  cursor: pointer;
+  padding: 12px;
+  transition-property: background-color, box-shadow;
+  transition-duration: 0.2s;
+  &:hover {
+    background-color: rgba(231, 233, 235, 0.1);
+    border-radius: 9999px;
+  }
+}

@@ -1,4 +1,6 @@
-# TwitterClone
+# Angular + Nestjs Twitter Clone
+
+An ongoing full stack twitter clone
 
 This project was generated using [Nx](https://nx.dev).
 
