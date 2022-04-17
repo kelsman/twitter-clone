@@ -1,0 +1,23 @@
+@tailwind components;
+
+@layer components {
+  .icon {
+    @apply cursor-pointer w-9 h-9 hover:bg-[#1d9bf0] hover:bg-opacity-10 flex text-[#359bf0] items-center justify-center rounded-full transition ease-out;
+  }
+}
+
+.textDraft__editor {
+  font-weight: 400;
+  overflow-wrap: break-word;
+  font-size: 20px;
+  line-height: 24px;
+  width: 100%;
+  margin-top: 10px;
+  background-color: inherit;
+  resize: none;
+}
+
+header {
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+}

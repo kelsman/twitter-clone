@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '~@ctrl/ngx-emoji-mart/picker';
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -15,5 +16,17 @@
 @layer base {
   body {
     @apply bg-black;
+  }
+  .icon {
+    @apply cursor-pointer w-9 h-9 hover:bg-[#1d9bf0] hover:bg-opacity-10 flex text-[#359bf0] items-center justify-center rounded-full transition ease-out;
+  }
+}
+
+.HoverGrayAnimation {
+  transition-property: background-color, box-shadow;
+  transition-duration: 0.2s;
+  &:hover {
+    background-color: rgba(231, 233, 235, 0.1);
+    border-radius: 9999px;
   }
 }

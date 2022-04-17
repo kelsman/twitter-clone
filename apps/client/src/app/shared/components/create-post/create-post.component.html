@@ -1,0 +1,72 @@
+<div class="flex items-center border-b border-gray-700 overflow-y-scroll p-3">
+  <!-- Image Placeholder  -->
+  <!-- Todo: replace with user's profile picture -->
+
+  <div class="w-[50px] h-[50px] bg-blue-500 rounded-full mr-4"></div>
+
+  <section class="w-full divide-y divide-gray-700">
+    <div>
+      <textarea
+        class="textDraft__editor bg-transparent outline-none text-white text-lg placeholder-gray-500"
+        placeholder="What's happening?"
+        #textDraft
+        rows="3"
+        [formControl]="postText"
+      ></textarea>
+      <!-- preview file -->
+      <section *ngIf="selectedFile" class="relative">
+        <div
+          class="w-8 h-8 bg-[#15181c] hover:bg-[#272c26] bg-opacity-75 rounded-full flex items-center justify-center top-2 left-1 cursor-pointer"
+          (click)="selectedFile = null"
+        >
+          <ng-icon name="hero-x" size="20" color="white"></ng-icon>
+        </div>
+        <img
+          class="rounded-2xl max-h-80 object-contain"
+          alt="post-media"
+          [src]="selectedFile"
+        />
+      </section>
+      <div class="flex items-center justify-between w-full">
+        <!-- Icons  -->
+        <section class="flex items-center">
+          <div class="icon" (click)="fileSelector.click()">
+            <ng-icon name="hero-photograph" size="22"></ng-icon>
+            <input
+              type="file"
+              hidden
+              #fileSelector
+              (change)="addImageToPost($event)"
+            />
+          </div>
+          <div class="icon rotate-90">
+            <ng-icon name="hero-chart-bar" size="22"></ng-icon>
+          </div>
+          <div class="icon" (click)="handleToggleEmoji()">
+            <ng-icon name="hero-emoji-happy" size="22"></ng-icon>
+          </div>
+        </section>
+        <!-- Emoji DropDown wrapper -->
+        <div
+          *ngIf="showEmoji"
+          class="absolute top-[190px] ml-[-30] max-w-[320px]"
+        >
+          <emoji-mart
+            [emoji]="'pointup'"
+            [darkMode]="true"
+            [set]="'twitter'"
+            [isNative]="true"
+            (emojiSelect)="handleEmojiSelect($event)"
+          ></emoji-mart>
+        </div>
+        <!-- Send Tweet Button -->
+        <button
+          [disabled]="!postText.valid && !selectedFile"
+          class="bg-[#1d9bf0] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default"
+        >
+          Tweet
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
