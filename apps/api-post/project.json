@@ -1,0 +1,52 @@
+{
+  "root": "apps/api-post",
+  "sourceRoot": "apps/api-post/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/api-post",
+        "main": "apps/api-post/src/main.ts",
+        "tsConfig": "apps/api-post/tsconfig.app.json",
+        "assets": ["apps/api-post/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/api-post/src/environments/environment.ts",
+              "with": "apps/api-post/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "api-post:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/api-post/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/api-post"],
+      "options": {
+        "jestConfig": "apps/api-post/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["post"]
+}

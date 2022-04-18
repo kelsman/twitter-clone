@@ -8,6 +8,7 @@ export interface SwaggerSetupOptions {
   version: string;
   bearerAuth?: boolean;
 }
+
 export const SwaggerSetup = (
   app: INestApplication,
   option: SwaggerSetupOptions
@@ -20,5 +21,5 @@ export const SwaggerSetup = (
     options.addBearerAuth();
   }
   const document = SwaggerModule.createDocument(app, options.build());
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerModule.setup('docs', app, document);
 };

@@ -5,8 +5,9 @@
 
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { SwaggerSetup } from '@twitter-clone/core';
+
 import { AppModule } from './app/app.module';
+import { SwaggerSetup } from '@twitter-clone/core';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,9 +19,8 @@ async function bootstrap() {
       forbidUnknownValues: true,
     })
   );
-
-  app.enableCors({});
   const port = process.env.PORT || 3333;
+
   SwaggerSetup(app, {
     title: 'Auth API',
     description: 'The auth API description',
@@ -31,7 +31,6 @@ async function bootstrap() {
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
   );
-  Logger.log(`Swagger at http://localhost:${port}/docs`);
 }
 
 bootstrap();

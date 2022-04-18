@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   HttpStatus,
   Inject,
@@ -9,16 +10,20 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
-import { ApiResponse, RedisSubject } from '@twitter-clone/core';
+import {
+  ApiResponse,
+  RedisSubject,
+  RefreshTokenResponse,
+} from '@twitter-clone/core';
 import { CreateUserDto, LogInUserDto } from '@twitter-clone/Dto';
 import { UserDocument, UserEntity } from '@twitter-clone/Schemas';
 import * as bcrypt from 'bcryptjs';
 import { Model } from 'mongoose';
 import { OnModuleDestroy } from '@nestjs/common/interfaces/hooks/on-destroy.interface';
-import { Subject } from 'rxjs';
+import { catchError, from, map, Subject } from 'rxjs';
 import { LogInUserResponse } from '@twitter-clone/api-interfaces';
 import { JwtService } from '@nestjs/jwt';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService implements OnModuleDestroy {
@@ -71,31 +76,19 @@ export class AuthService implements OnModuleDestroy {
 
     if (!bcrypt.compareSync(body.password, user.password))
       throw new NotFoundException('Invalid Credentials');
-    const access_token = await this.jwtService.signAsync(
-      {
-        email: user.email,
-        userId: user._id,
-      },
-      {
-        expiresIn: environment.JWT_ACCESS_EXPIRES_IN,
-      }
+    const access_token = await this.generateToken(
+      user._id,
+      environment.JWT_ACCESS_EXPIRES_IN
+    );
+    const refresh_token = await this.generateToken(
+      user._id,
+      environment.JWT_REFRESH_EXPIRES_IN
     );
 
-    const refresh_token = await this.jwtService.signAsync(
-      {
-        email: user.email,
-        userId: user._id,
-      },
-      {
-        expiresIn: environment.JWT_REFRESH_EXPIRES_IN,
-      }
-    );
-
-    if (!access_token || !refresh_token)
+    if (!access_token || !refresh_token) {
       throw new InternalServerErrorException('Error generating tokens');
-
+    }
     user['password'] = undefined;
-
     return {
       status: HttpStatus.OK,
       message: 'success',
@@ -105,10 +98,6 @@ export class AuthService implements OnModuleDestroy {
         refresh_token,
       },
     };
-  }
-
-  comparePasswords(candidatePassword: string, hashedPassword: string) {
-    return bcrypt.compare(candidatePassword, hashedPassword);
   }
 
   async emailExist(body: string) {
@@ -132,5 +121,53 @@ export class AuthService implements OnModuleDestroy {
       message: 'Email verified',
       data: true,
     };
+  }
+
+  async refreshToken(
+    token: string
+  ): Promise<ApiResponse<RefreshTokenResponse>> {
+    let userId: string;
+    from(
+      this.jwtService.verifyAsync(token, {
+        secret: environment.JWT_SECRET,
+      })
+    ).pipe(
+      map((decoded: any) => {
+        userId = decoded.userId;
+      }),
+      catchError((err) => {
+        throw new BadRequestException('Invalid token');
+      })
+    );
+    const access_token = await this.generateToken(
+      userId,
+      environment.JWT_ACCESS_EXPIRES_IN
+    );
+    const refresh_token = await this.generateToken(
+      userId,
+      environment.JWT_REFRESH_EXPIRES_IN
+    );
+
+    return {
+      status: HttpStatus.OK,
+      message: 'success',
+      data: {
+        access_token,
+        refresh_token,
+        access_token_expires_in: environment.JWT_ACCESS_EXPIRES_IN,
+        refresh_token_expires_in: environment.JWT_REFRESH_EXPIRES_IN,
+      },
+    };
+  }
+
+  async generateToken(userId: string, ttl: string) {
+    return await this.jwtService.signAsync(
+      {
+        userId: userId,
+      },
+      {
+        expiresIn: ttl,
+      }
+    );
   }
 }

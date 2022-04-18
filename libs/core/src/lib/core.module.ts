@@ -7,6 +7,9 @@ import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     PassportModule,
     JwtModule.registerAsync({
       useFactory: async (configService: ConfigService) => ({}),

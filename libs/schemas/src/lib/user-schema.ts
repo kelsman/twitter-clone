@@ -8,7 +8,7 @@ export class UserEntity implements CreateUser {
   @Prop({ trim: true, required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false, trim: true })
   username: string;
 
   @Prop({ required: false })
@@ -17,7 +17,7 @@ export class UserEntity implements CreateUser {
   @Prop({ type: Boolean, default: false })
   emailVerified?: boolean;
 
-  @Prop({required: false, default: false})
+  @Prop({ required: false, default: false })
   verified?: boolean;
 
   @Prop({
@@ -28,7 +28,7 @@ export class UserEntity implements CreateUser {
   })
   email: string;
 
-  @Prop({ required: true, trim: true })
+  @Prop({ required: false, trim: true })
   password: string;
 
   @Prop({ type: String, required: false })
