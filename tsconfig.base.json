@@ -10,16 +10,30 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@twitter-clone/Dto": ["libs/dto/src/index.ts"],
-      "@twitter-clone/Schemas": ["libs/schemas/src/index.ts"],
-      "@twitter-clone/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@twitter-clone/core": ["libs/core/src/index.ts"]
+      "@twitter-clone/Dto": [
+        "libs/dto/src/index.ts"
+      ],
+      "@twitter-clone/Schemas": [
+        "libs/schemas/src/index.ts"
+      ],
+      "@twitter-clone/api-interfaces": [
+        "libs/api-interfaces/src/index.ts"
+      ],
+      "@twitter-clone/core": [
+        "libs/core/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

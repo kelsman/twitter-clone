@@ -5,9 +5,9 @@ export const environment = {
   Database: {
     DB_URL: process.env.MONGO_URL,
   },
-  JWT_SECRET: process.env.SECRET_KEY,
-  JWT_ACCESS_EXPIRES_IN: process.env.ACCESS_EXPIRES_IN,
-  JWT_REFRESH_EXPIRES_IN: process.env.REFRESH_EXPIRES_IN,
+  JWT_SECRET: process.env.JWT_SECRET_KEY,
+  JWT_ACCESS_EXPIRES_IN: process.env.ACCESS_TOKEN_EXPIRATION,
+  JWT_REFRESH_EXPIRES_IN: process.env.REFRESH_TOKEN_EXPIRATION,
   Rabbitmq: {
     RabbitMq_URL: process.env.AMQP_URL,
   },

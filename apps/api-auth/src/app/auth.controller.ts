@@ -1,29 +1,28 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto } from '@twitter-clone/Dto';
+import { CreateUserDto, LogInUserDto } from '@twitter-clone/Dto';
 import { AuthService } from './auth.service';
 
 console.log(CreateUserDto);
+
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get()
-  getData() {
-    return this.authService.getData();
-  }
-
   @Post('/login')
-  handleLogin() {
-    return 'this is the login endpoint';
+  @ApiOperation({
+    summary: 'Log in user',
+  })
+  handleLogin(@Body() body: LogInUserDto) {
+    return this.authService.loginUser(body);
   }
 
   @Post('signup')
   @ApiOperation({
     summary: 'Register user',
   })
-  register(@Body() body: CreateUserDto) {
+  handleRegister(@Body() body: CreateUserDto) {
     return this.authService.registerUser(body);
   }
 
@@ -33,7 +32,7 @@ export class AuthController {
   }
 
   @Post('verify-email')
-  verifyEmail(@Query('token') token: string ){
-    return this.authService.verifyEmail(token)
+  verifyEmail(@Query('token') token: string) {
+    return this.authService.verifyEmail(token);
   }
 }

@@ -1,25 +1,22 @@
 import { Controller, Get } from '@nestjs/common';
-import { Ctx, EventPattern, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
-import { EmailConstants } from '@twitter-clone/core';
-import { EmailService } from './email.service';
+import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
+import { RedisSubject } from '@twitter-clone/core';
+import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly emailService: EmailService) {}
+  constructor(private readonly emailService: AppService) {}
 
   @Get()
   getData() {
     return this.emailService.getData();
   }
 
-  @MessagePattern( EmailConstants.EMAIL_VERIFICATION)
+  @EventPattern(RedisSubject.CONFIRM_EMAIL_SUBJECT)
   async verify(
-    @Payload() data: { email: string; userId: string },
+    @Payload() payload: { email: string; userId: string },
     @Ctx() context: RmqContext
   ) {
-
-    console.log(Payload)
-    console.log(`Channel: ${context.getChannel()}`);
-    await this.emailService.sendConfirmationEmail(data);
+    await this.emailService.sendConfirmationEmail(payload);
   }
 }
