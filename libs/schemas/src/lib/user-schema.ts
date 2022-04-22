@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { CreateUser } from '@twitter-clone/api-interfaces';
 import { Collections } from '@twitter-clone/core';
+import { CreateUser } from 'libs/interface/src';
 import { Document } from 'mongoose';
 
 @Schema({ timestamps: true, collection: Collections.USERS })
@@ -33,6 +33,9 @@ export class UserEntity implements CreateUser {
 
   @Prop({ type: String, required: false })
   profilePicture: string;
+
+  @Prop({ type: String, required: false })
+  provider?: string;
 }
 
 export type UserDocument = Document & UserEntity;

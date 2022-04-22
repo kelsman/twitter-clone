@@ -1,0 +1,65 @@
+<div class="w-screen h-screen overflow-y-scroll">
+  <div class="w-full min-h-[45vh] flex flex-col-reverse lg:flex-row">
+    <!-- Left  -->
+
+    <section class="left-side lg">
+      <div class="w-[300px] lg:w-[70%] p-[30px]">
+        <img src="https://rb.gy/ogau5a" class="w-full h-full" />
+      </div>
+    </section>
+
+    <!-- right -->
+    <section class="p-[20px] sm:px-[60px] lg:px-12">
+      <div
+        class="min-w-[45vw] max-w-[600px] m-auto flex basis-auto shrink-0 flex-col justify-center p-4"
+      >
+        <!-- Bird Logo -->
+
+        <img src="https://rb.gy/ogau5a" class="w-[50px] h-[50px] self-start" />
+
+        <!-- Title  -->
+        <h1 class="title__text">Happening now</h1>
+        <h3 class="title__subtext">Join twitter today</h3>
+
+        <h3>Join Twitter Today</h3>
+        <section class="">
+          <!-- Sign in with Google -->
+          <div class="signup__container">
+            <a [href]="googleAuthUrl" target="_blank" class="google__container">
+              <span>Continue with Google</span>
+              <img
+                src="assets/google-logo.svg"
+                alt="google logo"
+                class="w-5 h-5"
+              />
+            </a>
+          </div>
+          <!-- Sign up with email or password -->
+
+          <div class="signup__container">
+            <button class="email__signup_container">
+              <span>Sign up with email</span>
+            </button>
+          </div>
+
+          <!-- Privacy Policy Text -->
+          <p
+            class="text-gray-100 text-opacity-25 text-xs w-full max-w-[300px] break-words mb-5"
+          >
+            By signing up, you agree to the Terms of Service and
+            <span class="text-[#1DA1F2]"> Privacy Policy, </span>
+            including <span class="text-[#1DA1F2]">Cookie Use.</span>Cookie Use.
+          </p>
+        </section>
+        <section class="mt-[40px] h-fit">
+          <p class="text-white text-base font-bold">Already have an account?</p>
+
+          <button class="signin__button">
+            <span>sign in</span>
+          </button>
+        </section>
+      </div>
+    </section>
+  </div>
+  <footer></footer>
+</div>

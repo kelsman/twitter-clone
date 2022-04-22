@@ -24,8 +24,8 @@
       "@twitter-clone/Schemas": [
         "libs/schemas/src/index.ts"
       ],
-      "@twitter-clone/api-interfaces": [
-        "libs/api-interfaces/src/index.ts"
+      "@twitter-clone/interface": [
+        "libs/interface/src/index.ts"
       ],
       "@twitter-clone/core": [
         "libs/core/src/index.ts"

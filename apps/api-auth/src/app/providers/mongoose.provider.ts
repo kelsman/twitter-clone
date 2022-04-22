@@ -1,4 +1,10 @@
-import { UserDocument, UserEntity, UserSchema } from '@twitter-clone/Schemas';
+import {
+  GoogleUserEntity,
+  GoogleUserSchema,
+  UserDocument,
+  UserEntity,
+  UserSchema,
+} from '@twitter-clone/Schemas';
 import * as bcrypt from 'bcryptjs';
 
 export const UserMongooseProvider = {
@@ -9,8 +15,7 @@ export const UserMongooseProvider = {
       let user = this;
       if (!user.isModified('password')) return next();
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(user.password, salt);
-      user.password = hashedPassword;
+      user.password = await bcrypt.hash(user.password, salt);
       console.log(user.password);
       next();
     });
@@ -24,4 +29,9 @@ export const UserMongooseProvider = {
 
     return userSchema;
   },
+};
+
+export const googleUserProvider = {
+  name: GoogleUserEntity.name,
+  useFactory: () => GoogleUserSchema,
 };

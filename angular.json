@@ -4,7 +4,7 @@
     "api": "apps/api",
     "api-auth": "apps/api-auth",
     "api-email": "apps/api-email",
-    "api-interfaces": "libs/api-interfaces",
+    "api-interface": "libs/interface",
     "api-post": "apps/api-post",
     "client": "apps/client",
     "client-e2e": "apps/client-e2e",

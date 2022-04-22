@@ -7,7 +7,10 @@ import {
   InternalServerErrorException,
   Logger,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
+import { OnModuleDestroy } from '@nestjs/common/interfaces/hooks/on-destroy.interface';
+import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import {
@@ -18,11 +21,9 @@ import {
 import { CreateUserDto, LogInUserDto } from '@twitter-clone/Dto';
 import { UserDocument, UserEntity } from '@twitter-clone/Schemas';
 import * as bcrypt from 'bcryptjs';
+import { LogInUserResponse } from 'libs/interface/src';
 import { Model } from 'mongoose';
-import { OnModuleDestroy } from '@nestjs/common/interfaces/hooks/on-destroy.interface';
 import { catchError, from, map, Subject } from 'rxjs';
-import { LogInUserResponse } from '@twitter-clone/api-interfaces';
-import { JwtService } from '@nestjs/jwt';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -136,6 +137,11 @@ export class AuthService implements OnModuleDestroy {
         userId = decoded.userId;
       }),
       catchError((err) => {
+        //check if error is expired token
+        if (err.name === 'TokenExpiredError') {
+          throw new UnauthorizedException('Token expired');
+        }
+        this._logger.error('Error verifying token: ', err);
         throw new BadRequestException('Invalid token');
       })
     );
