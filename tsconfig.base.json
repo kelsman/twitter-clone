@@ -18,17 +18,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@twitter-clone/Dto": [
+      "@project/core": [
+        "libs/core/src/index.ts"
+      ],
+      "@project/dto": [
         "libs/dto/src/index.ts"
       ],
-      "@twitter-clone/Schemas": [
+      "@project/schemas": [
         "libs/schemas/src/index.ts"
-      ],
-      "@twitter-clone/interface": [
-        "libs/interface/src/index.ts"
-      ],
-      "@twitter-clone/core": [
-        "libs/core/src/index.ts"
       ]
     }
   },

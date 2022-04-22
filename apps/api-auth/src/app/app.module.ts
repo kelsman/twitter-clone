@@ -3,8 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
-import { GoogleAuthGuard, GoogleStrategy } from '@twitter-clone/core';
+import { GoogleAuthGuard, GoogleStrategy } from '@project/core';
 import { environment } from '../environments/environment';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { AuthController } from './controllers/auth.controller';
 import { OAuthController } from './controllers/oauth.controller';
 import {
@@ -36,7 +38,13 @@ import { OAuthService } from './services/oauth.service';
       },
     ]),
   ],
-  controllers: [AuthController, OAuthController],
-  providers: [AuthService, OAuthService, GoogleStrategy, GoogleAuthGuard],
+  controllers: [AuthController, OAuthController, AppController],
+  providers: [
+    AuthService,
+    OAuthService,
+    GoogleStrategy,
+    GoogleAuthGuard,
+    AppService,
+  ],
 })
 export class AppModule {}

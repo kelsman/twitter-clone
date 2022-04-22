@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { CreateGoogleUser } from 'libs/interface/src';
+import { CreateGoogleUser } from '@project/core';
 import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })

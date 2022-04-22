@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import configuration from './config/configuration';
-import { AppService } from './app.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import configuration from './config/configuration';
 
 console.log(join(__dirname, './assets/templates'));
 
@@ -16,14 +16,14 @@ console.log(join(__dirname, './assets/templates'));
       load: [configuration],
     }),
     MailerModule.forRootAsync({
-      useFactory: () => ({
+      useFactory: (configService: ConfigService) => ({
         transport: {
-          host: 'smtp-relay.sendinblue.com',
+          host: configService.get<string>('email.host'),
           port: 587,
           secure: false,
           auth: {
-            user: 'oigiangbekelvin@gmail.com',
-            pass: 'gyFfQMZ7SpRWEL4G',
+            user: configService.get<string>('email.username'),
+            pass: configService.get<string>('email.password'),
           },
         },
 
@@ -35,6 +35,7 @@ console.log(join(__dirname, './assets/templates'));
           },
         },
       }),
+      imports: [ConfigModule],
     }),
   ],
   controllers: [AppController],

@@ -1,11 +1,10 @@
 {
-  "npmScope": "twitter-clone",
+  "npmScope": "project",
   "affected": {
     "defaultBase": "main"
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular",
-    "packageManager": "npm"
+    "defaultCollection": "@nrwl/angular"
   },
   "implicitDependencies": {
     "package.json": {
@@ -16,9 +15,15 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "accessToken": "NmI4OTdmMGMtYmM2OC00NWU4LThkNWUtNGIyM2ZlYWY1MmQzfHJlYWQtd3JpdGU="
       }
     }
   },
@@ -45,5 +50,5 @@
       "style": "scss"
     }
   },
-  "defaultProject": "client"
+  "defaultProject": "web-client"
 }

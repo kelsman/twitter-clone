@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { GoogleAuthGuard } from '@twitter-clone/core';
+import { GoogleAuthGuard } from '@project/core';
 import { Response } from 'express';
 import { catchError, from, map } from 'rxjs';
 import { environment } from '../../environments/environment';

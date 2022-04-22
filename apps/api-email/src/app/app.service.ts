@@ -1,14 +1,14 @@
+import { MailerService } from '@nestjs-modules/mailer';
 import {
   Injectable,
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { MailerService } from '@nestjs-modules/mailer';
 
-const SibApiV3Sdk = require('sib-api-v3-sdk');
-SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey =
-  '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';
+// const SibApiV3Sdk = require('sib-api-v3-sdk');
+// SibApiV3Sdk.ApiClient.instance.authentications['api-key'].apiKey =
+//   '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';
 
 //
 // const transporter = nodemailer.createTransport({

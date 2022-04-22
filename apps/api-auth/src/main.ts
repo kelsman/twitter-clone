@@ -5,7 +5,7 @@
 
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { SwaggerSetup } from '@twitter-clone/core';
+import { SwaggerSetup } from '@project/core';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {

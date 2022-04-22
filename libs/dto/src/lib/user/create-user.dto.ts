@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateUser } from '@project/core';
 import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { CreateUser } from 'libs/interface/src';
-
 export class CreateUserDto implements CreateUser {
   @IsString()
   @IsNotEmpty()

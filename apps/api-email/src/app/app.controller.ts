@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
-import { RedisSubject } from '@twitter-clone/core';
+import { RedisSubject } from '@project/core';
 import { AppService } from './app.service';
 
 @Controller()

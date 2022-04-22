@@ -1,8 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ApiResponse } from '@twitter-clone/core';
-import { GoogleUserDocument, GoogleUserEntity } from '@twitter-clone/Schemas';
-import { GoogleLoginResponse } from 'libs/interface/src';
+import { ApiResponse, GoogleLoginResponse } from '@project/core';
+import { GoogleUserDocument, GoogleUserEntity } from '@project/schemas';
 import { Model } from 'mongoose';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';

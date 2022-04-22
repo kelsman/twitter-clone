@@ -1,8 +1,11 @@
 import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { ApiResponse, RefreshTokenResponse } from '@twitter-clone/core';
-import { CreateUserDto, LogInUserDto } from '@twitter-clone/Dto';
-import { LogInUserResponse } from 'libs/interface/src';
+import {
+  ApiResponse,
+  LogInUserResponse,
+  RefreshTokenResponse,
+} from '@project/core';
+import { CreateUserDto, LogInUserDto } from '@project/dto';
 import { AuthService } from '../services/auth.service';
 
 @ApiTags('Auth')

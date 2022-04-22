@@ -4,7 +4,7 @@ import {
   UserDocument,
   UserEntity,
   UserSchema,
-} from '@twitter-clone/Schemas';
+} from '@project/schemas';
 import * as bcrypt from 'bcryptjs';
 
 export const UserMongooseProvider = {

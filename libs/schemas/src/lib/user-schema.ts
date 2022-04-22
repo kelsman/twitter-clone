@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Collections } from '@twitter-clone/core';
-import { CreateUser } from 'libs/interface/src';
+import { Collections, CreateUser } from '@project/core';
 import { Document } from 'mongoose';
 
 @Schema({ timestamps: true, collection: Collections.USERS })

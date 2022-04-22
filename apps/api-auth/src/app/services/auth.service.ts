@@ -13,15 +13,15 @@ import { OnModuleDestroy } from '@nestjs/common/interfaces/hooks/on-destroy.inte
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
+import { CreateUserDto, LogInUserDto } from '@project/dto';
+import { UserDocument, UserEntity } from '@project/schemas';
+import * as bcrypt from 'bcryptjs';
 import {
   ApiResponse,
+  LogInUserResponse,
   RedisSubject,
   RefreshTokenResponse,
-} from '@twitter-clone/core';
-import { CreateUserDto, LogInUserDto } from '@twitter-clone/Dto';
-import { UserDocument, UserEntity } from '@twitter-clone/Schemas';
-import * as bcrypt from 'bcryptjs';
-import { LogInUserResponse } from 'libs/interface/src';
+} from 'libs/core/src';
 import { Model } from 'mongoose';
 import { catchError, from, map, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';

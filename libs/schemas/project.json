@@ -2,17 +2,6 @@
   "root": "libs/schemas",
   "sourceRoot": "libs/schemas/src",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/schemas",
-        "tsConfig": "libs/schemas/tsconfig.lib.json",
-        "packageJson": "libs/schemas/package.json",
-        "main": "libs/schemas/src/index.ts",
-        "assets": ["libs/schemas/*.md"]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
@@ -24,7 +13,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/schemas"],
       "options": {
-        "jestConfig": "libs/schemas/jest.config.js",
+        "jestConfig": "libs/schemas/jest.config.ts",
         "passWithNoTests": true
       }
     }
