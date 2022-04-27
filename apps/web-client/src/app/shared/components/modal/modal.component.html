@@ -1,1 +1,8 @@
-<p>modal works!</p>
+<div [id]="modalId" class="modal bg-opacity-5">
+  <div class="modal__card">
+    <div class="modal__icon" (click)="closeModal()">
+      <ng-icon name="hero-x" size="30" color="#ffffff"></ng-icon>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</div>

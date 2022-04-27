@@ -1,0 +1,44 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  backdrop-filter: blur(5px);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(91, 112, 131, 0.4);
+  display: grid;
+  place-items: center;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+
+  &__card {
+    width: 100%;
+    max-width: 600px;
+    min-height: 400px;
+    z-index: 10;
+    height: 650px;
+    max-height: 90vh;
+    background: var(--background-dark);
+    border-radius: 16px;
+    //box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+
+    @media screen and(max-width: 640px) {
+      width: 100%;
+      min-height: 789px;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 1.5rem;
+    left: 15px;
+    border-radius: 50%;
+    width: fit-content;
+    height: fit-content;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+}

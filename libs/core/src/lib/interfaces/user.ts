@@ -20,7 +20,7 @@ export interface CreateGoogleUser {
 }
 
 export interface AuthUser {
-  _id: string;
+  _id?: string;
   email: string;
   password: string;
   name: string;
@@ -40,4 +40,18 @@ export interface GoogleLoginResponse {
   user: GoogleUserDocument;
   access_token: string;
   refresh_token: string;
+}
+
+export interface GoogleUser {
+  provider: string;
+  id: string;
+  email: string;
+  name: string;
+  photoUrl: string;
+  firstName: string;
+  lastName: string;
+  authToken: string;
+  idToken: string;
+  authorizationCode: string;
+  response: any;
 }

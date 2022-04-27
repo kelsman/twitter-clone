@@ -21,7 +21,7 @@
           "apps/web-client/src/assets"
         ],
         "styles": [
-          "apps/web-client/src/styles.scss"
+          "apps/web-client/src/scss/styles.scss"
         ],
         "scripts": []
       },

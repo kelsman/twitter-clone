@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   AUTH_API_URI: 'http://localhost:3333/api',
+  GOOGLE_CLIENT_ID:
+    '525983998154-k5sq532ue4d0cv9dmrqelsoapnc6m7og.apps.googleusercontent.com',
 };
 
 /*

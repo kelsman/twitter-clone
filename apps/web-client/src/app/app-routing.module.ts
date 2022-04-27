@@ -5,7 +5,12 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: async () =>
-      (await import('./pages/pages.module')).PagesModule,
+      (await import('./modules/main/main.module')).MainModule,
+  },
+  {
+    path: '',
+    loadChildren: async () =>
+      (await import('./modules/auth/auth.module')).AuthModule,
   },
 ];
 

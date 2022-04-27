@@ -5,7 +5,7 @@ import {
   LogInUserResponse,
   RefreshTokenResponse,
 } from '@project/core';
-import { CreateUserDto, LogInUserDto } from '@project/dto';
+import { CreateUserDto, GoogleUserDto, LogInUserDto } from '@project/dto';
 import { AuthService } from '../services/auth.service';
 
 @ApiTags('Auth')
@@ -41,6 +41,12 @@ export class AuthController {
   })
   handleRegister(@Body() body: CreateUserDto): Promise<ApiResponse<void>> {
     return this.authService.registerUser(body);
+  }
+
+  @Post('/google/login')
+  @ApiOperation({ summary: 'Log User in with Google OAuth2' })
+  async googlelogin(@Body() user: GoogleUserDto) {
+    return this.authService.loginGoogleUser(user);
   }
 
   @Get('email-exist')

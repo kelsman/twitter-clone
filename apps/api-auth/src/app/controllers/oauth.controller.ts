@@ -1,16 +1,7 @@
-import {
-  Controller,
-  Get,
-  InternalServerErrorException,
-  Logger,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GoogleAuthGuard } from '@project/core';
 import { Response } from 'express';
-import { catchError, from, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { OAuthService } from '../services/oauth.service';
 
@@ -28,24 +19,11 @@ export class OAuthController {
   @UseGuards(GoogleAuthGuard)
   @ApiOperation({ summary: 'Google OAuth Redirect' })
   async handleGoogleAuthRedirect(@Req() req, @Res() res: Response) {
-    return from(this.OAuthService.googleAuthRedirect(req)).pipe(
-      catchError((error) => {
-        Logger.error(
-          'Error in OAuthController.handleGoogleAuthRedirect',
-          error
-        );
-        throw new InternalServerErrorException();
-      }),
-      map(({ data }) => {
-        return res.redirect(
-          `${environment.CLIENT_URL}/auth/?access_token=${data.access_token}refresh_token=${data.refresh_token}`
-        );
-      })
+    const resVal = await this.OAuthService.googleAuthRedirect(req);
+    console.log('resVal', resVal);
+
+    return res.redirect(
+      `${environment.CLIENT_URL}/auth?access_token=${resVal.data.access_token}&&refresh_token=${resVal.data.refresh_token}`
     );
-    // .then(({ data }) => {
-    //   res.redirect(
-    //     `${environment.CLIENT_URL}/auth/i/flow/google?access_token=${data.access_token}refresh_token=${data.refresh_token}`
-    //   );
-    // });
   }
 }

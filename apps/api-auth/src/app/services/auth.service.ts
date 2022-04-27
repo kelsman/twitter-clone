@@ -7,30 +7,32 @@ import {
   InternalServerErrorException,
   Logger,
   NotFoundException,
+  OnModuleInit,
   UnauthorizedException,
 } from '@nestjs/common';
 import { OnModuleDestroy } from '@nestjs/common/interfaces/hooks/on-destroy.interface';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateUserDto, LogInUserDto } from '@project/dto';
-import { UserDocument, UserEntity } from '@project/schemas';
-import * as bcrypt from 'bcryptjs';
 import {
   ApiResponse,
   LogInUserResponse,
   RedisSubject,
   RefreshTokenResponse,
-} from 'libs/core/src';
+} from '@project/core';
+import { CreateUserDto, GoogleUserDto, LogInUserDto } from '@project/dto';
+import { UserDocument, UserEntity } from '@project/schemas';
+import * as bcrypt from 'bcryptjs';
+import { Auth, google } from 'googleapis';
 import { Model } from 'mongoose';
 import { catchError, from, map, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable()
-export class AuthService implements OnModuleDestroy {
+export class AuthService implements OnModuleDestroy, OnModuleInit {
   private destroy$ = new Subject<void>();
   private _logger = new Logger('AppService');
-
+  private oAuthClient: Auth.OAuth2Client;
   constructor(
     @InjectModel(UserEntity.name) private userRepo: Model<UserDocument>,
     @Inject('EMAIL_SERVICE') private readonly emailService: ClientProxy,
@@ -40,9 +42,73 @@ export class AuthService implements OnModuleDestroy {
   onModuleDestroy() {
     this.destroy$.next();
   }
+  onModuleInit() {
+    this.oAuthClient = new google.auth.OAuth2(
+      environment.GOOGLE_OAUTH_CLIENT_ID,
+      environment.GOOGLE_OAUTH_CLIENT_SECRET
+    );
+  }
 
   getData(): { message: string } {
     return { message: 'Welcome to api-auth!' };
+  }
+
+  async loginGoogleUser(googleUser: GoogleUserDto) {
+    const tokenInfo = await this.oAuthClient.getTokenInfo(googleUser.authToken);
+
+    const userInDb = await this.userRepo.findOne({
+      email: googleUser.email,
+    });
+
+    if (!userInDb) {
+      const user = new this.userRepo({
+        email: googleUser.email,
+        name: googleUser.name,
+        profilePicture: googleUser.photoUrl,
+        provider: googleUser.provider,
+        emailVerified: tokenInfo.email_verified,
+      });
+
+      const newUser = await user.save();
+      if (!newUser)
+        throw new InternalServerErrorException('Error registering user');
+
+      const access_token = await this.generateToken(
+        newUser._id,
+        environment.JWT_ACCESS_EXPIRES_IN
+      );
+      const refresh_token = await this.generateToken(
+        newUser._id,
+        environment.JWT_REFRESH_EXPIRES_IN
+      );
+
+      return {
+        status: HttpStatus.CREATED,
+        data: {
+          user: newUser,
+          access_token,
+          refresh_token,
+        },
+      };
+    }
+
+    const access_token = await this.generateToken(
+      userInDb._id,
+      environment.JWT_ACCESS_EXPIRES_IN
+    );
+    const refresh_token = await this.generateToken(
+      userInDb._id,
+      environment.JWT_REFRESH_EXPIRES_IN
+    );
+
+    return {
+      status: HttpStatus.OK,
+      data: {
+        user: userInDb,
+        access_token,
+        refresh_token,
+      },
+    };
   }
 
   async registerUser(body: CreateUserDto): Promise<ApiResponse<void>> {
