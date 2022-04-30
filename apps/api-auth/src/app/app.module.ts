@@ -8,10 +8,8 @@ import { environment } from '../environments/environment';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthController } from './controllers/auth.controller';
-import { OAuthController } from './controllers/oauth.controller';
 import { UserMongooseProvider } from './providers/mongoose.provider';
 import { AuthService } from './services/auth.service';
-import { OAuthService } from './services/oauth.service';
 
 @Module({
   imports: [
@@ -35,13 +33,7 @@ import { OAuthService } from './services/oauth.service';
       },
     ]),
   ],
-  controllers: [AuthController, OAuthController, AppController],
-  providers: [
-    AuthService,
-    OAuthService,
-    GoogleStrategy,
-    GoogleAuthGuard,
-    AppService,
-  ],
+  controllers: [AuthController, AppController],
+  providers: [AuthService, GoogleStrategy, GoogleAuthGuard, AppService],
 })
 export class AppModule {}

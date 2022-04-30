@@ -1,0 +1,9 @@
+
+<section class="flex flex-col space-y-0">
+  <input [placeholder]="placeholder" [formControl]="control" [formControlName]="formControlName"/>
+  <p 
+  [class.error]="control.touched && control.dirty"
+  *ngIf="control.touched && control.dirty">
+  
+  </p>
+</section>

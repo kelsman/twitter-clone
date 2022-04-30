@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
+import { AppState } from '..';
 import { AuthService } from '../../shared/services/auth.service';
+import { ModalActions } from '../layout';
 import { userActions } from './user.actions';
 
 @Injectable()
@@ -23,7 +26,12 @@ export class userEffectService {
     () =>
       this.actions$.pipe(
         ofType(userActions.googleLogin),
-        tap(() => this.router.navigate(['/auth/google']))
+        tap(() => {
+          this.store.dispatch(
+            ModalActions.openModal({ modalId: 'google-auth' })
+          );
+          this.router.navigate(['/auth/google']);
+        })
       ),
     { dispatch: false }
   );
@@ -31,6 +39,7 @@ export class userEffectService {
   constructor(
     private actions$: Actions,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<AppState>
   ) {}
 }

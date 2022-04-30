@@ -1,6 +1,16 @@
-<app-modal [hidden]="!(isVisible | async)" modalId="google-auth">
+b<app-modal [hidden]="!(isVisible | async)" modalId="google-auth">
   <div class="flex flex-col items-center justify-center w-full h-full">
     <project-blue-spinner></project-blue-spinner>
   </div>
-  <div class="w-[50px] h-7 bg-red"></div>
+
+  <div *ngIf="userError | async">
+    <p class="text-red-400">Something went Wrong</p>
+  </div>
+
+  <section class="profile">
+    <div class="profile__usernameInput">
+      <input placeholder="choose username"/>
+    </div>
+
+  </section>
 </app-modal>

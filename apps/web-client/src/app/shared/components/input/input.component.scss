@@ -1,0 +1,26 @@
+
+input{
+  width: 100%;
+  min-height: 30px;
+  background: inherit;
+  border: none;
+  transition: all .5s ease-in-out;
+
+  &:focus{
+    outline: 0;
+  }
+
+
+
+
+}
+input.error{
+  border: 1px solid red;
+  color: red;
+
+}
+
+p.error{
+  color: red;
+  
+}

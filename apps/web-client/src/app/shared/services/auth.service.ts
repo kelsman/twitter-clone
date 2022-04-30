@@ -1,19 +1,69 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse, GoogleUser, LogInUserResponse } from '@project/core';
+import {
+  ApiResponse,
+  CreateUser,
+  GoogleUser,
+  LogInUser,
+  LogInUserResponse,
+  RefreshTokenResponse,
+} from '@project/core';
 import { environment } from 'apps/web-client/src/environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
+import { StorageService } from './storage.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl: string = environment.AUTH_API_URI;
+  baseUrl: string = environment.AUTH_API_URI + '/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService
+  ) {}
+
+  get AuthToken(): string {
+    return this.storageService.getItem('access_token');
+  }
+
+  get RefreshToken(): string {
+    return this.storageService.getItem('refresh_token');
+  }
 
   signInGoogle(user: GoogleUser): Observable<ApiResponse<LogInUserResponse>> {
+    return this.http
+      .post<ApiResponse<LogInUserResponse>>(
+        `${this.baseUrl}/google/login`,
+        user
+      )
+      .pipe(
+        tap(({ data }) => {
+          this.storageService.setItem('access_token', data.access_token);
+          this.storageService.setItem('refresh_token', data.refresh_token);
+        })
+      );
+  }
+
+  refreshToken(): Observable<RefreshTokenResponse> {
+    const params = new HttpParams().append('token', this.RefreshToken);
+    return this.http
+      .post<ApiResponse<RefreshTokenResponse>>(
+        `${this.baseUrl}/refresh-token`,
+        {},
+        {
+          params,
+        }
+      )
+      .pipe(map(({ data }) => data));
+  }
+
+  emailSignUp(user: CreateUser): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(`${this.baseUrl}/signup`, user);
+  }
+
+  logInUser(user: LogInUser): Observable<ApiResponse<LogInUserResponse>> {
     return this.http.post<ApiResponse<LogInUserResponse>>(
-      `${this.baseUrl}/auth/google/login`,
+      `${this.baseUrl}/login`,
       user
     );
   }

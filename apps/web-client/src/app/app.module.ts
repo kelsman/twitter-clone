@@ -1,3 +1,4 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -14,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { MainModule } from './modules/main/main.module';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { TokenInterceptor } from './shared/interceptors/token-interceptor.interceptor';
 import { SharedModule } from './shared/shared.module';
 import { appEffects, appReducers } from './store';
 
@@ -50,6 +53,17 @@ import { appEffects, appReducers } from './store';
           },
         ],
       } as SocialAuthServiceConfig,
+    },
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

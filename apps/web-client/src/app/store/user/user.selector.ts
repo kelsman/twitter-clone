@@ -8,6 +8,18 @@ const currentUser = createSelector(
   (state: UserState) => state.user
 );
 
+const loadingAction = createSelector(
+  selectUserFeature,
+  (state: UserState) => state.loadingAction
+);
+
+const userError = createSelector(
+  selectUserFeature,
+  (state: UserState) => state.error
+);
+
 export const userSelectors = {
   currentUser,
+  loadingAction,
+  userError,
 };

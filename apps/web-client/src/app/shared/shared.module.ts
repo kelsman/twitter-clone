@@ -12,6 +12,7 @@ import { PostBoxComponent } from './components/post-box/post-box.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { WidgetsComponent } from './components/widgets/widgets.component';
 import { HeroIconsImportList } from './models';
+import { InputComponent } from './components/input/input.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { HeroIconsImportList } from './models';
     CreatePostComponent,
     PostBoxComponent,
     BlueSpinnerComponent,
+    InputComponent,
   ],
   exports: [
     SidebarComponent,

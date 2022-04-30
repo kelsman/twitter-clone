@@ -10,6 +10,12 @@ export interface CreateUser {
   profilePicture?: string;
 }
 
+export interface LogInUser {
+  username?: string;
+  password: string;
+  email?: string;
+}
+
 export interface CreateGoogleUser {
   _id?: string;
   googleId: string;
