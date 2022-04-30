@@ -1,5 +1,8 @@
-b<app-modal [hidden]="!(isVisible | async)" modalId="google-auth">
-  <div class="flex flex-col items-center justify-center w-full h-full">
+<app-modal [hidden]="!(isVisible | async)" modalId="google-auth">
+  <div
+    *ngIf="loading | async"
+    class="flex flex-col items-center justify-center w-full h-full"
+  >
     <project-blue-spinner></project-blue-spinner>
   </div>
 
@@ -7,10 +10,17 @@ b<app-modal [hidden]="!(isVisible | async)" modalId="google-auth">
     <p class="text-red-400">Something went Wrong</p>
   </div>
 
-  <section class="profile">
-    <div class="profile__usernameInput">
-      <input placeholder="choose username"/>
-    </div>
-
-  </section>
+  <div class="w-full h-full grid place-items-center">
+    <section class="profile">
+      <div class="profile__usernameInput">
+        <project-input
+          [control]="userNameControl"
+          [placeholder]="'Username'"
+        ></project-input>
+      </div>
+      <button [disabled]="userNameControl.invalid" class="profile__nextBtn">
+        Next
+      </button>
+    </section>
+  </div>
 </app-modal>

@@ -3,7 +3,12 @@ import { ModalActions } from './modal.action';
 import { ModalState } from './modal.model';
 
 const initialState: ModalState = {
-  modals: [],
+  modals: [
+    {
+      modalId: 'google-auth',
+      isOpen: true,
+    },
+  ],
 };
 
 export const modalReducer = createReducer(

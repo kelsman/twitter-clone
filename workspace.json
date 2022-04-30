@@ -3,6 +3,7 @@
   "projects": {
     "api-auth": "apps/api-auth",
     "api-email": "apps/api-email",
+    "api-user": "apps/api-user",
     "core": "libs/core",
     "dto": "libs/dto",
     "schemas": "libs/schemas",

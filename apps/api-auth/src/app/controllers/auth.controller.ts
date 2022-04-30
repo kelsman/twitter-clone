@@ -79,4 +79,9 @@ export class AuthController {
   ): Promise<ApiResponse<RefreshTokenResponse>> {
     return this.authService.refreshToken(token);
   }
+
+  @Post('validate-username')
+  handleValidate(@Body('username') username: string) {
+    return this.authService.usernameExist(username);
+  }
 }

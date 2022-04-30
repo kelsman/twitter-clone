@@ -25,7 +25,7 @@ import { UserDocument, UserEntity } from '@project/schemas';
 import * as bcrypt from 'bcryptjs';
 import { Auth, google } from 'googleapis';
 import { Model } from 'mongoose';
-import { catchError, from, map, Subject } from 'rxjs';
+import { catchError, from, map, Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -176,6 +176,22 @@ export class AuthService implements OnModuleDestroy, OnModuleInit {
     return {
       status: HttpStatus.OK,
     };
+  }
+
+  usernameExist(username: string): Observable<ApiResponse<void>> {
+    return from(this.userRepo.findOne({ username: username })).pipe(
+      map((user) => {
+        if (user)
+          return {
+            status: HttpStatus.BAD_REQUEST,
+            message: 'Username already exists',
+          };
+
+        return {
+          status: HttpStatus.OK,
+        };
+      })
+    );
   }
 
   async verifyEmail(token: string): Promise<ApiResponse<boolean>> {

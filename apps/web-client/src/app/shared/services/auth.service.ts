@@ -67,4 +67,11 @@ export class AuthService {
       user
     );
   }
+
+  validateUsername(username: string) {
+    return this.http.post<ApiResponse<void>>(
+      `${this.baseUrl}/validate-username`,
+      { username }
+    );
+  }
 }

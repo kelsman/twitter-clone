@@ -1,9 +1,25 @@
+<input
+  type="text"
+  [type]="type"
+  [placeholder]="placeholder"
+  [class.error]="control.touched && control.dirty && control.invalid"
+  [formControl]="control"
+/>
 
-<section class="flex flex-col space-y-0">
-  <input [placeholder]="placeholder" [formControl]="control" [formControlName]="formControlName"/>
-  <p 
-  [class.error]="control.touched && control.dirty"
-  *ngIf="control.touched && control.dirty">
-  
+<ng-container *ngIf="control.touched && control.dirty && control.touched">
+  <p *ngIf="control.errors?.required">{{ placeholder }} is required</p>
+
+  <p *ngIf="control.errors?.minlength">
+    {{ placeholder }} must be at least
+    {{ control.errors.minlength.requiredLength }} characters
   </p>
-</section>
+
+  <p *ngIf="control.errors?.maxlength">
+    {{ placeholder }} must be at most
+    {{ control.errors.maxlength.requiredLength }} characters
+  </p>
+
+  <p *ngIf="control.errors?.usernameExists">
+    {{ placeholder }} is already taken
+  </p>
+</ng-container>
