@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtAuthGuard } from './guards';
 import { JwtStrategy } from './strategy';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -11,9 +11,8 @@ import { JwtModule } from '@nestjs/jwt';
       isGlobal: true,
     }),
     PassportModule,
-    JwtModule.registerAsync({
-      useFactory: async (configService: ConfigService) => ({}),
-      imports: [ConfigModule],
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
     }),
   ],
   controllers: [],

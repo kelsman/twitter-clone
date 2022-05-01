@@ -26,8 +26,11 @@ const setUser = createAction(
   userActionTypes.SET_USER,
   props<{ user: AuthUser }>()
 );
+
+const logOutUser = createAction(userActionTypes.LOGOUT_USER);
 export const userActions = {
   googleLogin,
   googleLoginFailure,
   setUser,
+  logOutUser,
 };

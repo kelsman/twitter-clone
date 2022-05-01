@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import {
   ApiResponse,
   CreateUser,
@@ -10,6 +12,8 @@ import {
 } from '@project/core';
 import { environment } from 'apps/web-client/src/environments/environment';
 import { map, Observable, tap } from 'rxjs';
+import { AppState } from '../../store';
+import { userActions } from '../../store/user';
 import { StorageService } from './storage.service';
 @Injectable({
   providedIn: 'root',
@@ -19,7 +23,9 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   get AuthToken(): string {
@@ -44,7 +50,7 @@ export class AuthService {
       );
   }
 
-  refreshToken(): Observable<RefreshTokenResponse> {
+  refreshExpiredToken(): Observable<RefreshTokenResponse> {
     const params = new HttpParams().append('token', this.RefreshToken);
     return this.http
       .post<ApiResponse<RefreshTokenResponse>>(
@@ -73,5 +79,11 @@ export class AuthService {
       `${this.baseUrl}/validate-username`,
       { username }
     );
+  }
+
+  logOut() {
+    this.storageService.clearAll();
+    this.router.navigate(['/auth']);
+    this.store.dispatch(userActions.logOutUser());
   }
 }

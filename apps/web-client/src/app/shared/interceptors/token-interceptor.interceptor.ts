@@ -11,7 +11,6 @@ import {
   catchError,
   filter,
   finalize,
-  map,
   Observable,
   switchMap,
   take,
@@ -41,7 +40,7 @@ export class TokenInterceptor implements HttpInterceptor {
           requestError &&
           [401, 403].includes(requestError.status)
         ) {
-          this.handle401Error(request, next);
+          return this.handle401Error(request, next);
         }
 
         return throwError(() => new Error(requestError.message));
@@ -52,35 +51,34 @@ export class TokenInterceptor implements HttpInterceptor {
   handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (this.isRefreshing) {
       return this.refreshTokenSubject.pipe(
-        filter((result) => result !== null),
+        filter((result) => result),
         take(1),
         switchMap(() => next.handle(this.addAuthToken(request)))
       );
     } else {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
-      return this.authService.refreshToken().pipe(
-        map((res) => {
-          this.storageService.setItem('access_token', res.access_token);
-          this.storageService.setItem('refresh_token', res.refresh_token);
-          return res.access_token;
-        }),
-        switchMap((token) => {
-          this.refreshTokenSubject.next(token);
+      return this.authService.refreshExpiredToken().pipe(
+        switchMap(({ access_token, refresh_token }) => {
+          this.storageService.setItem('access_token', access_token);
+          this.storageService.setItem('refresh_token', refresh_token);
+          this.refreshTokenSubject.next(access_token);
           return next.handle(this.addAuthToken(request));
         }),
-        finalize(() => (this.isRefreshing = false))
+        finalize(() => {
+          this.isRefreshing = false;
+        })
       );
     }
   }
 
   addAuthToken(request: HttpRequest<any>) {
-    const token = this.authService.AuthToken;
+    const token = this.storageService.getItem('access_token');
     if (!token) return request;
 
     return request.clone({
       setHeaders: {
-        Authorization: `Basic ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
   }

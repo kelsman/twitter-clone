@@ -18,10 +18,8 @@ import { AuthService } from './services/auth.service';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    JwtModule.registerAsync({
-      useFactory: () => ({
-        secret: <string>environment.JWT_SECRET,
-      }),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
     }),
     ClientsModule.register([
       {

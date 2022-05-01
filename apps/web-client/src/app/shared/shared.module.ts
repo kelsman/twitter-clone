@@ -4,6 +4,10 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { NgIconsModule } from '@ng-icons/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { userReducer, USER_FEATURE_KEY } from '../store/user';
+import { userEffectService } from '../store/user/user.effects';
 import { BlueSpinnerComponent } from './components/blue-spinner/blue-spinner.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { FeedComponent } from './components/feed/feed.component';
@@ -13,6 +17,7 @@ import { PostBoxComponent } from './components/post-box/post-box.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { WidgetsComponent } from './components/widgets/widgets.component';
 import { HeroIconsImportList } from './models';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   imports: [
@@ -21,6 +26,8 @@ import { HeroIconsImportList } from './models';
     ReactiveFormsModule,
     PickerModule,
     HttpClientModule,
+    StoreModule.forFeature(USER_FEATURE_KEY, userReducer),
+    EffectsModule.forFeature([userEffectService]),
   ],
   declarations: [
     SidebarComponent,
@@ -31,6 +38,7 @@ import { HeroIconsImportList } from './models';
     PostBoxComponent,
     BlueSpinnerComponent,
     InputComponent,
+    SafeUrlPipe,
   ],
   exports: [
     SidebarComponent,
@@ -40,6 +48,7 @@ import { HeroIconsImportList } from './models';
     CreatePostComponent,
     BlueSpinnerComponent,
     InputComponent,
+    SafeUrlPipe,
   ],
 })
 export class SharedModule {}

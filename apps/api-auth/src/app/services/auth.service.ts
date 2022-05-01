@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   HttpStatus,
   Inject,
@@ -25,7 +24,7 @@ import { UserDocument, UserEntity } from '@project/schemas';
 import * as bcrypt from 'bcryptjs';
 import { Auth, google } from 'googleapis';
 import { Model } from 'mongoose';
-import { catchError, from, map, Observable, Subject } from 'rxjs';
+import { from, map, Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -209,24 +208,8 @@ export class AuthService implements OnModuleDestroy, OnModuleInit {
   async refreshToken(
     token: string
   ): Promise<ApiResponse<RefreshTokenResponse>> {
-    let userId: string;
-    from(
-      this.jwtService.verifyAsync(token, {
-        secret: environment.JWT_SECRET,
-      })
-    ).pipe(
-      map((decoded: any) => {
-        userId = decoded.userId;
-      }),
-      catchError((err) => {
-        //check if error is expired token
-        if (err.name === 'TokenExpiredError') {
-          throw new UnauthorizedException('Token expired');
-        }
-        this._logger.error('Error verifying token: ', err);
-        throw new BadRequestException('Invalid token');
-      })
-    );
+    const { userId } = await this.jwtService.verify(token);
+    if (!userId) throw new UnauthorizedException();
     const access_token = await this.generateToken(
       userId,
       environment.JWT_ACCESS_EXPIRES_IN

@@ -12,13 +12,13 @@ export class GoogleUserDto implements Partial<GoogleUser> {
   provider?: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty({
     description: 'Google user photo url',
     required: true,
     example: 'https://placeholder.com',
   })
-  photoUrl: string;
+  photoUrl?: string;
 
   @IsEmail()
   @IsNotEmpty()

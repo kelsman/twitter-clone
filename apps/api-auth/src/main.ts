@@ -20,7 +20,7 @@ async function bootstrap() {
   );
 
   app.enableCors({});
-  const port = process.env.PORT || 3333;
+  const port = process.env.PORT || 4001;
   SwaggerSetup(app, {
     title: 'Auth API',
     description: 'The auth API description',

@@ -53,6 +53,7 @@
     &:disabled {
       background-color: rgba(74, 117, 118, 0.427);
       color: var(--text-white);
+      cursor: not-allowed;
     }
   }
 }

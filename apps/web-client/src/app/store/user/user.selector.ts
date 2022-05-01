@@ -1,7 +1,8 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { UserState, USER_FEATURE_KEY } from './user.model';
+import { createSelector } from '@ngrx/store';
+import { AppState } from '..';
+import { UserState } from './user.model';
 
-const selectUserFeature = createFeatureSelector(USER_FEATURE_KEY);
+const selectUserFeature = (state: AppState) => state.user;
 
 const currentUser = createSelector(
   selectUserFeature,

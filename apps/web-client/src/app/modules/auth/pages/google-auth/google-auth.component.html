@@ -1,26 +1,36 @@
-<app-modal [hidden]="!(isVisible | async)" modalId="google-auth">
-  <div
-    *ngIf="loading | async"
-    class="flex flex-col items-center justify-center w-full h-full"
-  >
-    <project-blue-spinner></project-blue-spinner>
-  </div>
+<section>
+  <app-modal [hidden]="!(isVisible | async)" modalId="google-auth">
+    <div
+      *ngIf="chekingUserName"
+      class="flex flex-col items-center justify-center w-full h-full"
+    >
+      <project-blue-spinner></project-blue-spinner>
+    </div>
 
-  <div *ngIf="userError | async">
-    <p class="text-red-400">Something went Wrong</p>
-  </div>
+    <div *ngIf="userError | async">
+      <p class="text-red-400">Something went Wrong</p>
+    </div>
 
-  <div class="w-full h-full grid place-items-center">
-    <section class="profile">
-      <div class="profile__usernameInput">
-        <project-input
-          [control]="userNameControl"
-          [placeholder]="'Username'"
-        ></project-input>
-      </div>
-      <button [disabled]="userNameControl.invalid" class="profile__nextBtn">
-        Next
-      </button>
-    </section>
-  </div>
-</app-modal>
+    <div
+      [hidden]="showUsernameSettings === false"
+      class="w-full h-full grid place-items-center"
+    >
+      <section class="profile">
+        <div class="profile__usernameInput">
+          <project-input
+            [control]="userNameControl"
+            [placeholder]="'Username'"
+          ></project-input>
+        </div>
+        <button
+          (click)="onSubmit()"
+          type="button"
+          [disabled]="userNameControl.invalid"
+          class="profile__nextBtn"
+        >
+          Next
+        </button>
+      </section>
+    </div>
+  </app-modal>
+</section>

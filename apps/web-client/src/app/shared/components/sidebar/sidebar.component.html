@@ -11,7 +11,7 @@
   <!-- menu icons list -->
   <section class="space-y-2.5 xl:ml-4">
     <div
-      class="text-[#d9d9d9] flex items-center justify-center  xl:justify-start space-x-3 group icon__wrapper"
+      class="text-[#d9d9d9] flex items-center justify-center xl:justify-start space-x-3 group icon__wrapper"
       *ngFor="let icon of sidebarIconsList"
     >
       <ng-icon [name]="icon.name" size="28" class="h-7 w-6"></ng-icon>
@@ -28,18 +28,54 @@
     <a href="#" class="">Tweet</a>
   </button>
 
-  <!-- Profile Image and Name -->
-  <div
-    class="flex p-[12px] items-center mt-auto text-white w-full HoverGrayAnimation"
-  >
-    <!-- placeholder image -->
-    <div class="bg-blue-700 rounded-full w-8 h-8 mr-3"></div>
-    <div class="hidden xl:flex flex-col text-sm">
-      <span class="font-bold">Kelvin Ose</span>
-      <span>@KelvinOse</span>
+  <div class="relative items-center mt-auto text-white w-full">
+    <!-- Profile options  -->
+    <div *ngIf="showProfileOptions" class="optionsBox">
+      <section class="optionsBox__profile">
+        <section class="px-4 flex">
+          <div class="rounded-full w-10 h-10 mr-3">
+            <img
+              [src]="profileImage | safeUrl"
+              class="w-full h-full object-cover rounded-full"
+              alt="profile image"
+            />
+          </div>
+          <div class="flex flex-col text-sm">
+            <span class="font-bold">Kelvin Ose</span>
+            <span>@{{ currentUser?.username }}</span>
+          </div>
+        </section>
+      </section>
+      <section>
+        <div class="optionsBox__logOut" (click)="handleLogOut()">
+          Log out @{{ currentUser?.username }}
+        </div>
+      </section>
+      <svg class="optionsBox__chevron" viewBox="0 0 24 24">
+        <path
+          d="M12.538 6.478c-.14-.146-.335-.228-.538-.228s-.396.082-.538.228l-9.252 9.53c-.21.217-.27.538-.152.815.117.277.39.458.69.458h18.5c.302 0 .573-.18.69-.457.118-.277.058-.598-.152-.814l-9.248-9.532z"
+        ></path>
+      </svg>
     </div>
-    <h4 class="hidden xl:block ml-auto">
-      <ng-icon name="hero-dots-horizontal" size="16"></ng-icon>
-    </h4>
+    <!--   Profile Image and Name -->
+    <section
+      (click)="toggleProfileOptions()"
+      class="cursor-pointer p-[12px] flex w-full HoverGrayAnimation"
+    >
+      <div class="rounded-full w-8 h-8 mr-3">
+        <img
+          [src]="profileImage | safeUrl"
+          class="w-full h-full object-cover rounded-full"
+          alt="profile image"
+        />
+      </div>
+      <div class="hidden xl:flex flex-col text-sm">
+        <span class="font-bold">Kelvin Ose</span>
+        <span>@{{ currentUser?.username }}</span>
+      </div>
+      <h4 class="hidden xl:block ml-auto">
+        <ng-icon name="hero-dots-horizontal" size="16"></ng-icon>
+      </h4>
+    </section>
   </div>
 </nav>
