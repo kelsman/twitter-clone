@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { AuthUser } from '@project/core';
@@ -30,17 +30,14 @@ export class GoogleAuthComponent implements OnInit, OnDestroy {
   chekingUserName = false;
   destroy$ = new Subject<void>();
   showUsernameSettings: boolean = false;
-  userNameControl = new FormControl(
-    '',
-    [Validators.required, Validators.minLength(2)],
-    [this.usernameValidator.validate.bind(this.usernameValidator)]
-  );
+  userNameControl: FormControl;
 
   constructor(
     private store: Store<AppState>,
     private profileService: ProfileService,
     private usernameValidator: UsernameValidator,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {}
 
   ngOnDestroy(): void {
@@ -51,6 +48,11 @@ export class GoogleAuthComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loading = this.store.select(userSelectors.loadingAction);
     this.userError = this.store.select(userSelectors.userError);
+    this.userNameControl = this.fb.control(
+      '',
+      [Validators.required, Validators.minLength(2)],
+      this.usernameValidator.validate()
+    );
     this.checkUserHasUsername();
   }
 

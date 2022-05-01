@@ -21,6 +21,12 @@
             [control]="userNameControl"
             [placeholder]="'Username'"
           ></project-input>
+          <div class="absolute right-2 top-3">
+            <project-blue-spinner
+              size="small"
+              *ngIf="userNameControl.pending"
+            ></project-blue-spinner>
+          </div>
         </div>
         <button
           (click)="onSubmit()"

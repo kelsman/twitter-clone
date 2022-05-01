@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   AUTH_API_URI: `http://localhost:4001/api`,
   USER_API_URI: `http://localhost:4002/api`,
+  POST_API_URI: `http://localhost:4000/api`,
   GOOGLE_CLIENT_ID:
     '525983998154-k5sq532ue4d0cv9dmrqelsoapnc6m7og.apps.googleusercontent.com',
 };

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'create-post',
@@ -9,15 +10,17 @@ import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 })
 export class CreatePostComponent implements OnInit {
   selectedFile: string | ArrayBuffer | null = null;
-  postText = new FormControl('', Validators.required);
+  postText: FormControl;
   showEmoji: boolean = false;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   get textVal() {
     return this.postText.value;
+  }
+
+  constructor(private fb: FormBuilder, private postService: PostService) {}
+
+  ngOnInit(): void {
+    this.postText = this.fb.control('', Validators.required);
   }
 
   handleToggleEmoji() {
@@ -40,5 +43,11 @@ export class CreatePostComponent implements OnInit {
     reader.onload = () => {
       this.selectedFile = reader.result;
     };
+  }
+
+  submitTweet(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.postService.createPost({ content: this.textVal });
   }
 }
