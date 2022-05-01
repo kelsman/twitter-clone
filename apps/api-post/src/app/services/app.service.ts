@@ -20,8 +20,11 @@ export class AppService {
     @InjectModel(PostEntity.name) private postRepo: Model<PostDocument>,
     @InjectModel(UserEntity.name) private userRepo: Model<UserDocument>
   ) {}
-  getData(): { message: string } {
-    return { message: 'Welcome to api-post!' };
+  async getData(userId: string) {
+    return await this.postRepo.find({ author: userId }).populate({
+      path: 'author',
+      model: this.userRepo,
+    });
   }
 
   async handleCreatPost(
@@ -36,6 +39,11 @@ export class AppService {
     if (!newPost) {
       throw new InternalServerErrorException();
     }
+    await newPost.populate({
+      path: 'author',
+      model: this.userRepo,
+    });
+
     return {
       status: HttpStatus.CREATED,
       message: 'Post created successfully',

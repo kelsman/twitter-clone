@@ -19,13 +19,13 @@ async function bootstrap() {
     })
   );
   app.enableCors();
-  const port = process.env.PORT || 4000;
   SwaggerSetup(app, {
     title: 'Post API',
     description: 'The Post API description',
     version: '1.0.0',
     bearerAuth: true,
   });
+  const port = process.env.PORT || 4000;
   await app.listen(port);
   Logger.log(`🚀 Application is running on: http://localhost:${port}`);
   Logger.log(`Swagger at http://localhost:${port}/docs`);

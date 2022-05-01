@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { JwtAuthGuard, JwtStrategy } from '@project/core';
+import { CoreModule, JwtAuthGuard, JwtStrategy } from '@project/core';
 import {
   PostEntity,
   PostSchema,
@@ -16,6 +16,7 @@ import { AppService } from './services/app.service';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    CoreModule,
     MongooseModule.forRoot(process.env.MONGO_URL),
     MongooseModule.forFeature([
       { name: PostEntity.name, schema: PostSchema },

@@ -18,6 +18,7 @@ export class PostEntity implements Post {
     type: mongoose.Schema.Types.ObjectId,
     ref: Collections.POSTS,
     required: true,
+    populate: true,
   })
   @IsString()
   @IsNotEmpty()
@@ -48,3 +49,4 @@ export class PostEntity implements Post {
 
 export type PostDocument = Document & PostEntity;
 export const PostSchema = SchemaFactory.createForClass(PostEntity);
+PostSchema.plugin(require('mongoose-autopopulate'));

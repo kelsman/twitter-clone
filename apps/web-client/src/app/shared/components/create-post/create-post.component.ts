@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { Subject, takeUntil } from 'rxjs';
 import { PostService } from '../../services/post.service';
 
 @Component({
@@ -8,16 +9,22 @@ import { PostService } from '../../services/post.service';
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.scss'],
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent implements OnInit , OnDestroy{
   selectedFile: string | ArrayBuffer | null = null;
   postText: FormControl;
   showEmoji: boolean = false;
+  destroy$: Subject<void> = new Subject<void>();
 
   get textVal() {
     return this.postText.value;
   }
 
   constructor(private fb: FormBuilder, private postService: PostService) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     this.postText = this.fb.control('', Validators.required);
@@ -48,6 +55,6 @@ export class CreatePostComponent implements OnInit {
   submitTweet(event: Event) {
     event.preventDefault();
     event.stopPropagation();
-    this.postService.createPost({ content: this.textVal });
+    this.postService.createPost({ content: this.textVal }).pipe(takeUntil(this.destroy$)).subscribe()
   }
 }

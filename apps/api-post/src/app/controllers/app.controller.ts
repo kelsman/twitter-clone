@@ -7,7 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthenticatedUser, JwtAuthGuard } from '@project/core';
 import { CreatePostDto } from '@project/dto';
 import { PostEntity } from '@project/schemas';
@@ -15,13 +15,14 @@ import { AppService } from '../services/app.service';
 
 @UseGuards(JwtAuthGuard)
 @ApiTags('Post')
+@ApiBearerAuth()
 @Controller('post')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getData() {
-    return this.appService.getData();
+  getData(@AuthenticatedUser() userId: string) {
+    return this.appService.getData(userId);
   }
 
   @Post('create')
