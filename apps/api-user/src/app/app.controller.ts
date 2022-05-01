@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
-  ApiResponse,
+  ApiResponseType,
   AuthenticatedUser,
   AuthUser,
   JwtAuthGuard,
@@ -30,7 +30,7 @@ export class AppController {
   handleUpdate(
     @Body('username' as keyof AuthUser) username: string,
     @AuthenticatedUser() user: string
-  ): Observable<ApiResponse<AuthUser>> {
+  ): Observable<ApiResponseType<AuthUser>> {
     return this.appService.updateUsername(user, username);
   }
 }

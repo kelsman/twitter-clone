@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
-  ApiResponse,
+  ApiResponseType,
   LogInUserResponse,
   RefreshTokenResponse,
 } from '@project/core';
@@ -25,21 +25,21 @@ export class AuthController {
   @HttpCode(200)
   handleLogin(
     @Body() body: LogInUserDto
-  ): Promise<ApiResponse<LogInUserResponse>> {
+  ): Promise<ApiResponseType<LogInUserResponse>> {
     return this.authService.loginUser(body);
   }
 
   /**
    * @description Register User
    * @param body {CreateUserDto}
-   * @returns { Promise<ApiResponse<void>> }
+   * @returns { Promise<ApiResponseType<void>> }
    * @param body
    */
   @Post('signup')
   @ApiOperation({
     summary: 'Register user',
   })
-  handleRegister(@Body() body: CreateUserDto): Promise<ApiResponse<void>> {
+  handleRegister(@Body() body: CreateUserDto): Promise<ApiResponseType<void>> {
     return this.authService.registerUser(body);
   }
 
@@ -66,7 +66,7 @@ export class AuthController {
   /**
    * @description  Refresh token
    * @queryParam token
-   * @returns {Promise<ApiResponse<RefreshTokenResponse>>}
+   * @returns {Promise<ApiResponseType<RefreshTokenResponse>>}
    */
   @Post('refresh-token')
   @ApiOperation({
@@ -76,7 +76,7 @@ export class AuthController {
   @HttpCode(200)
   handleRefreshToken(
     @Query('token') token: string
-  ): Promise<ApiResponse<RefreshTokenResponse>> {
+  ): Promise<ApiResponseType<RefreshTokenResponse>> {
     return this.authService.refreshToken(token);
   }
 

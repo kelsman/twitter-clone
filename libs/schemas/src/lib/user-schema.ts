@@ -35,6 +35,12 @@ export class UserEntity implements CreateUser {
 
   @Prop({ type: String, required: false })
   provider?: string;
+
+  @Prop({ default: 0, type: Number, required: false })
+  followersCount?: number;
+
+  @Prop({ default: 0, type: Number, required: false })
+  followingCount?: number;
 }
 
 export type UserDocument = Document & UserEntity;

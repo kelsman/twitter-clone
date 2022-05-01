@@ -28,14 +28,28 @@ export class PostEntity implements Post {
   @Prop({ type: String, trim: true })
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ type: String, example: 'Hello World' })
+  @ApiProperty({ type: String, example: 'Hello World', required: true })
   content: string;
 
   @Prop({ required: false, default: false })
   @IsBoolean()
   @IsOptional()
-  @ApiProperty({ type: Boolean, default: false })
+  @ApiProperty({ required: false, type: Boolean })
   pinned?: boolean;
+
+  @Prop({
+    required: false,
+    type: [
+      {
+        url: String,
+        key: String,
+      },
+    ],
+  })
+  postMedia?: {
+    url: string;
+    key: string;
+  }[];
 
   @ApiProperty({ type: Date, example: new Date() })
   createdAt: Date;

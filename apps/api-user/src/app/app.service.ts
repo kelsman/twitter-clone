@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ApiResponse, AuthUser } from '@project/core';
+import { ApiResponseType, AuthUser } from '@project/core';
 import { UserDocument, UserEntity } from '@project/schemas';
 import { Model } from 'mongoose';
 import { from, Observable } from 'rxjs';
@@ -26,7 +26,7 @@ export class AppService {
   updateUsername(
     userId: string,
     username: string
-  ): Observable<ApiResponse<AuthUser>> {
+  ): Observable<ApiResponseType<AuthUser>> {
     return from(
       this.userRepo.findByIdAndUpdate(
         userId,
@@ -53,7 +53,7 @@ export class AppService {
     );
   }
 
-  async getProfile(id: string): Promise<ApiResponse<AuthUser>> {
+  async getProfile(id: string): Promise<ApiResponseType<AuthUser>> {
     const user = await this.findById(id);
     if (!user) {
       throw new NotFoundException('User not found');

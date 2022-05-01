@@ -7,6 +7,10 @@ export interface Post {
   pinned?: boolean;
   createdAt: Date;
   updatedAt: Date;
+  postMedia?: {
+    url: string;
+    key: string;
+  }[];
 }
 
 export interface CreatePost {

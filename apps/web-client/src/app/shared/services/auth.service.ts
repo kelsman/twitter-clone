@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
-  ApiResponse,
+  ApiResponseType,
   CreateUser,
   GoogleUser,
   LogInUser,
@@ -36,9 +36,11 @@ export class AuthService {
     return this.storageService.getItem('refresh_token');
   }
 
-  signInGoogle(user: GoogleUser): Observable<ApiResponse<LogInUserResponse>> {
+  signInGoogle(
+    user: GoogleUser
+  ): Observable<ApiResponseType<LogInUserResponse>> {
     return this.http
-      .post<ApiResponse<LogInUserResponse>>(
+      .post<ApiResponseType<LogInUserResponse>>(
         `${this.baseUrl}/google/login`,
         user
       )
@@ -53,7 +55,7 @@ export class AuthService {
   refreshExpiredToken(): Observable<RefreshTokenResponse> {
     const params = new HttpParams().append('token', this.RefreshToken);
     return this.http
-      .post<ApiResponse<RefreshTokenResponse>>(
+      .post<ApiResponseType<RefreshTokenResponse>>(
         `${this.baseUrl}/refresh-token`,
         {},
         {
@@ -63,19 +65,22 @@ export class AuthService {
       .pipe(map(({ data }) => data));
   }
 
-  emailSignUp(user: CreateUser): Observable<ApiResponse<void>> {
-    return this.http.post<ApiResponse<void>>(`${this.baseUrl}/signup`, user);
+  emailSignUp(user: CreateUser): Observable<ApiResponseType<void>> {
+    return this.http.post<ApiResponseType<void>>(
+      `${this.baseUrl}/signup`,
+      user
+    );
   }
 
-  logInUser(user: LogInUser): Observable<ApiResponse<LogInUserResponse>> {
-    return this.http.post<ApiResponse<LogInUserResponse>>(
+  logInUser(user: LogInUser): Observable<ApiResponseType<LogInUserResponse>> {
+    return this.http.post<ApiResponseType<LogInUserResponse>>(
       `${this.baseUrl}/login`,
       user
     );
   }
 
   validateUsername(username: string) {
-    return this.http.post<ApiResponse<void>>(
+    return this.http.post<ApiResponseType<void>>(
       `${this.baseUrl}/validate-username`,
       { username }
     );

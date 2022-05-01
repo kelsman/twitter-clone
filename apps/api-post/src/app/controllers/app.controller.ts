@@ -1,16 +1,26 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
+  UploadedFile,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthenticatedUser, JwtAuthGuard } from '@project/core';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ApiFile, AuthenticatedUser, JwtAuthGuard } from '@project/core';
 import { CreatePostDto } from '@project/dto';
 import { PostEntity } from '@project/schemas';
+import 'multer';
 import { AppService } from '../services/app.service';
 
 @UseGuards(JwtAuthGuard)
@@ -25,6 +35,12 @@ export class AppController {
     return this.appService.getData(userId);
   }
 
+  @Get(':id')
+  @ApiOkResponse({ type: PostEntity })
+  findOne(@Param('id') id: string) {
+    return this.appService.findOne(id);
+  }
+
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({
@@ -32,7 +48,18 @@ export class AppController {
     description: 'The post has been successfully created.',
     type: PostEntity,
   })
-  create(@AuthenticatedUser() userId: string, @Body() body: CreatePostDto) {
-    return this.appService.handleCreatPost(userId, body);
+  @ApiConsumes('multipart/form-data')
+  @ApiFile('file', false)
+  create(
+    @UploadedFile() file: Express.Multer.File,
+    @AuthenticatedUser() userId: string,
+    @Body() body: CreatePostDto
+  ) {
+    return this.appService.handleCreatPost(userId, body, file);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string, @AuthenticatedUser() userId: string) {
+    return this.appService.deletePost(id, userId);
   }
 }

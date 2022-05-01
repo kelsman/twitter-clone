@@ -14,7 +14,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import {
-  ApiResponse,
+  ApiResponseType,
   LogInUserResponse,
   RedisSubject,
   RefreshTokenResponse,
@@ -110,7 +110,7 @@ export class AuthService implements OnModuleDestroy, OnModuleInit {
     };
   }
 
-  async registerUser(body: CreateUserDto): Promise<ApiResponse<void>> {
+  async registerUser(body: CreateUserDto): Promise<ApiResponseType<void>> {
     const existingUser = await this.userRepo.findOne({
       email: body.email,
     });
@@ -131,7 +131,9 @@ export class AuthService implements OnModuleDestroy, OnModuleInit {
     };
   }
 
-  async loginUser(body: LogInUserDto): Promise<ApiResponse<LogInUserResponse>> {
+  async loginUser(
+    body: LogInUserDto
+  ): Promise<ApiResponseType<LogInUserResponse>> {
     const user: UserDocument = await this.userRepo
       .findOne({
         $or: [{ email: body.email }, { username: body.username }],
@@ -177,7 +179,7 @@ export class AuthService implements OnModuleDestroy, OnModuleInit {
     };
   }
 
-  usernameExist(username: string): Observable<ApiResponse<void>> {
+  usernameExist(username: string): Observable<ApiResponseType<void>> {
     return from(this.userRepo.findOne({ username: username })).pipe(
       map((user) => {
         if (user)
@@ -193,7 +195,7 @@ export class AuthService implements OnModuleDestroy, OnModuleInit {
     );
   }
 
-  async verifyEmail(token: string): Promise<ApiResponse<boolean>> {
+  async verifyEmail(token: string): Promise<ApiResponseType<boolean>> {
     const user = await this.userRepo.findById(token);
     if (!user) throw new NotFoundException('User not found');
     user.emailVerified = true;
@@ -207,7 +209,7 @@ export class AuthService implements OnModuleDestroy, OnModuleInit {
 
   async refreshToken(
     token: string
-  ): Promise<ApiResponse<RefreshTokenResponse>> {
+  ): Promise<ApiResponseType<RefreshTokenResponse>> {
     const { userId } = await this.jwtService.verify(token);
     if (!userId) throw new UnauthorizedException();
     const access_token = await this.generateToken(

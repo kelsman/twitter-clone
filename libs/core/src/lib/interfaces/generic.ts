@@ -2,7 +2,7 @@ export interface Message {
   message: string;
 }
 
-export interface ApiResponse<T> {
+export interface ApiResponseType<T> {
   status: number;
   message?: string;
   data?: T;

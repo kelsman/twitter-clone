@@ -28,6 +28,8 @@ This repository is an ongoing twitter clone application, featuring an event driv
 - [Mongoose](https://mongoosejs.com/) as ORM for database interaction
 - [socketIO](https://socket.io/) for realtime bi-directional communications
 
+- Redis as Message-broker
+
 ### Services breakdown:
 
 - API auth (user authentication and authorization)
