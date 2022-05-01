@@ -30,7 +30,7 @@ This repository is an ongoing twitter clone application, featuring an event driv
 
 ### Services breakdown:
 
--API auth (user authentication and authorization)
+- API auth (user authentication and authorization)
 
 - Api post service ( CRUD for tweets)
 - Api Email service(Sending Emails)
