@@ -1,59 +1,64 @@
 # Angular + Nestjs Twitter Clone
 
-An ongoing full stack twitter clone
+This repository is an ongoing twitter clone application, featuring an event driven microservice architecture managed in an [Nx](https://nx.dev) workspace.This project was using [Nx](https://nx.dev).
 
-This project was generated using [Nx](https://nx.dev).
+## user stories
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+- A user can be authenticated via google
+- A user can be authenticated via email and password
+- A user makes a post
+- A user can subscribe to other users
+- A user has a viewable list of their own posts
+- A user can chat with other users or a group of users
+- A user has an activity feed of those they follow's post
 
-🔎 **Smart, Fast and Extensible Build System**
+### This app needs to provide the following functionalities
 
-## Quick Start & Documentation
+- To create a user
+- To login a user
+- To get the list of user's post
+- To retrieve an aggregated activity feed of posts from those they follow
+- To retweet other users posts
 
-[Nx Documentation](https://nx.dev/angular)
+### Technical choices
 
-[10-minute video showing all Nx features](https://nx.dev/getting-started/intro)
+- [Angular](https://angular.io) for web-client
+- [Nest](https://nestjs.com) for backend
+- [MongoDB](https://www.mongodb.com/) for a NoSQL datastore
+- [Mongoose](https://mongoosejs.com/) as ORM for database interaction
+- [socketIO](https://socket.io/) for realtime bi-directional communications
 
-[Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
+### Services breakdown:
 
-## Adding capabilities to your workspace
+-API auth (user authentication and authorization)
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+- Api post service ( CRUD for tweets)
+- Api Email service(Sending Emails)
+- Api Feed service(Aggregating user activity feed)
+- Api chat service (CRUD messaging)
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+### Sharable libraries breakdown:
 
-Below are our core plugins:
+- core ( decorators, guards, interfaces, utility functions, constants )
+- dto ( all data transferable objects used across services)
+- schemas ( contains all schemas)
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
+### Environmental variables
 
-There are also many [community plugins](https://nx.dev/community) you could add.
-
-## Generate an application
-
-Run `ng g @nrwl/angular:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@twitter-clone/mylib`.
+- MONGO_URL //your mongodb url
+- JWT_SECRET //json web token secret
+- JWT_ACCESS_EXPIRES_IN //Expiry time for access token
+- JWT_REFRESH_EXPIRES_IN //Expiry time for refresh token
+- EMAIL_USER // smt username
+- EMAIL_PASSWORD //smtp password
+- EMAIL_SERVICE // smtp service
+- POST_PORT = 4000
+- AUTH_PORT = 4001
+- USER_PORT = 4002
+- GOOGLE_OAUTH_CLIENT_SECRET // google oauth client secret
+- GOOGLE_OAUTH_CLIENT_ID // google oauth client id
+- GOOGLE_OAUTH_REDIRECT_URI // google oauth redirect url
+- CLIENT_URL // web client url
 
 ## Development server
 
