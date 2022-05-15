@@ -1,11 +1,18 @@
-<main
-  class="bg-black min-h-screen flex max-w-[1500px] mx-auto flex-shrink-0 basis-0"
+<div
+  class="w-screen lg:max-w-7xl mx-auto max-h-screen overflow-hidden grid grid-cols-9"
 >
   <!-- Sidebar -->
-  <sidebar></sidebar>
+  <section class="col-span-2">
+    <sidebar></sidebar>
+  </section>
+
   <!-- Feed -->
-  <feed></feed>
+  <section class="col-span-7 lg:col-span-5">
+    <feed></feed>
+  </section>
+
   <!-- widgets -->
-  <widgets></widgets>
-  <!-- Modal -->
-</main>
+  <section class="col-span-2 hidden lg:inline">
+    <widgets></widgets>
+  </section>
+</div>

@@ -11,6 +11,11 @@ export interface Post {
     url: string;
     key: string;
   }[];
+  likesCount?: number;
+  commentsCount?: number;
+  retweetsCount?: number;
+  likes?: string[] | AuthUser[];
+  userLikedPost?: boolean;
 }
 
 export interface CreatePost {

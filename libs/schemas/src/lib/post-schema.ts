@@ -1,8 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Collections, Post } from '@project/core';
-import { Transform } from 'class-transformer';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import {
+  IsArray,
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { ObjectId } from 'mongodb';
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
@@ -16,7 +24,7 @@ export class PostEntity implements Post {
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: Collections.POSTS,
+    ref: Collections.USERS,
     required: true,
     populate: true,
   })
@@ -50,6 +58,42 @@ export class PostEntity implements Post {
     url: string;
     key: string;
   }[];
+
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: Collections.USERS,
+    required: false,
+    default: [],
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => UserEntity)
+  likes?: UserEntity[] | string[];
+
+  @Prop({ required: false, default: 0 })
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({ required: false, type: Number, example: 0 })
+  likesCount?: number;
+
+  @Prop({ required: false, default: 0 })
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({ required: false, type: Number, example: 0 })
+  commentsCount?: number;
+
+  @Prop({ required: false, default: 0 })
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({ required: false, type: Number, example: 0 })
+  retweetsCount?: number;
+
+  @Prop({ required: false, default: false })
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty({ required: false, type: Boolean })
+  userLikedPost?: boolean;
 
   @ApiProperty({ type: Date, example: new Date() })
   createdAt: Date;

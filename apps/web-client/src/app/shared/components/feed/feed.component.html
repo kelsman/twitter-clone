@@ -1,6 +1,5 @@
-<div class="feed__container sm:ml-[73px] xl:ml-[370px] py-2 bg-inherit">
+<div class="border-x border-gray-700 h-screen overflow-y-scroll">
   <header class="py-2 px-3">
-    <!-- Title -->
     <h2 class="font-bold text-lg">Home</h2>
     <div
       class="HoverGrayAnimation w-10 h-10 rounded-full grid place-items-center"
@@ -10,10 +9,21 @@
   </header>
 
   <!-- Create Post  -->
-  <section class="">
-    <create-post></create-post>
-  </section>
 
-  <!-- List of Posts -->
-  <post-box> </post-box>
+  <create-post></create-post>
+
+  <section class="relative w-full">
+    <!-- Spinner for Loading Feeds  -->
+    <div
+      *ngIf="loadingFeeds$ | async"
+      class="flex flex-col my-auto mt-4 items-center justify-center w-full h-full"
+    >
+      <project-blue-spinner></project-blue-spinner>
+    </div>
+
+    <!-- List of Posts -->
+    <ng-container *ngIf="feeds$ | async as feeds">
+      <post-box *ngFor="let feed of feeds" [post]="feed"> </post-box>
+    </ng-container>
+  </section>
 </div>

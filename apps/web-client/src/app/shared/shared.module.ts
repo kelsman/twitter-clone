@@ -18,6 +18,9 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { WidgetsComponent } from './components/widgets/widgets.component';
 import { HeroIconsImportList } from './models';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
+import { AuthUserPipe } from './pipes/auth-user.pipe';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 @NgModule({
   imports: [
@@ -39,6 +42,9 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     BlueSpinnerComponent,
     InputComponent,
     SafeUrlPipe,
+    UserAvatarComponent,
+    AuthUserPipe,
+    DateAgoPipe,
   ],
   exports: [
     SidebarComponent,
@@ -49,6 +55,9 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     BlueSpinnerComponent,
     InputComponent,
     SafeUrlPipe,
+    UserAvatarComponent,
+    AuthUserPipe,
+    DateAgoPipe,
   ],
 })
 export class SharedModule {}

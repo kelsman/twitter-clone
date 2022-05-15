@@ -1,0 +1,12 @@
+<div
+  [class.small]="size == 'small'"
+  [class.medium]="size == 'medium'"
+  [class.large]="size == 'large'"
+  class="rounded-full"
+>
+  <img
+    [src]="profileImage | safeUrl"
+    class="w-full h-full object-cover rounded-full"
+    alt="profile image"
+  />
+</div>

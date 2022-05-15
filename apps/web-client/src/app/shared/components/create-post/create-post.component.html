@@ -1,13 +1,20 @@
-<div class="flex items-center border-b border-gray-700 overflow-y-scroll p-3">
+<div
+  class="flex border-b border-gray-700 overflow-y-scroll p-3"
+  [ngClass]="{ 'opacity-60': isLoading$ | async }"
+>
   <!-- Image Placeholder  -->
   <!-- Todo: replace with user's profile picture -->
 
-  <div class="w-[50px] h-[50px] bg-blue-500 rounded-full mr-4"></div>
+  <!-- Avatar -->
+  <div class="mr-4">
+    <project-user-avatar></project-user-avatar>
+  </div>
 
+  <!-- Post Content -->
   <section class="w-full divide-y divide-gray-700">
     <div>
       <textarea
-        class="textDraft__editor bg-transparent outline-none text-white text-lg placeholder-gray-500"
+        class="textDraft__editor bg-transparent outline-none text-white text-base sm:text-md placeholder-gray-500"
         placeholder="What's happening?"
         #textDraft
         rows="3"
@@ -16,7 +23,7 @@
       <!-- preview file -->
       <section *ngIf="selectedFile" class="relative">
         <div
-          class="w-8 h-8 bg-[#15181c] hover:bg-[#272c26] bg-opacity-75 rounded-full flex items-center justify-center top-2 left-1 cursor-pointer"
+          class="w-8 h-8 bg-[#15181c] hover:bg-[#272c26] bg-opacity-75 rounded-full flex items-center justify-center left-1 cursor-pointer absolute top-1"
           (click)="selectedFile = null"
         >
           <ng-icon name="hero-x" size="20" color="white"></ng-icon>
@@ -24,10 +31,13 @@
         <img
           class="rounded-2xl max-h-80 object-contain"
           alt="post-media"
-          [src]="selectedFile"
+          [src]="previewFile"
         />
       </section>
-      <div class="flex items-center justify-between w-full">
+      <div
+        [ngClass]="{ hidden: isLoading$ | async }"
+        class="flex items-center justify-between w-full"
+      >
         <!-- Icons  -->
         <section class="flex items-center">
           <div class="icon" (click)="fileSelector.click()">
@@ -36,20 +46,21 @@
               type="file"
               hidden
               #fileSelector
-              (change)="addImageToPost($event)"
+              (change)="handleFileInputChange($event)"
             />
           </div>
           <div class="icon rotate-90">
             <ng-icon name="hero-chart-bar" size="22"></ng-icon>
           </div>
-          <div class="icon" (click)="handleToggleEmoji()">
+          <div class="icon" (click)="handleToggleEmoji($event)">
             <ng-icon name="hero-emoji-happy" size="22"></ng-icon>
           </div>
         </section>
         <!-- Emoji DropDown wrapper -->
         <div
+          [hidden]="!showEmoji"
           *ngIf="showEmoji"
-          class="absolute top-[190px] ml-[-30] max-w-[320px]"
+          class="absolute z-30 top-[190px] ml-[-30] max-w-[320px]"
         >
           <emoji-mart
             [emoji]="'pointup'"

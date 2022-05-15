@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtAuthGuard } from './guards';
+import { ParseObjectIdPipe } from './pipes';
 import { FileService } from './services/file.service';
 import { JwtStrategy } from './strategy';
 
@@ -17,7 +18,7 @@ import { JwtStrategy } from './strategy';
     }),
   ],
   controllers: [],
-  providers: [JwtAuthGuard, JwtStrategy, FileService],
-  exports: [JwtAuthGuard, JwtStrategy, FileService],
+  providers: [JwtAuthGuard, JwtStrategy, FileService, ParseObjectIdPipe],
+  exports: [JwtAuthGuard, JwtStrategy, FileService, ParseObjectIdPipe],
 })
 export class CoreModule {}

@@ -1,3 +1,4 @@
+export * from './lib/comment.schema';
 export * from './lib/followers.schema';
 export * from './lib/following.schema';
 export * from './lib/google-user.schema';

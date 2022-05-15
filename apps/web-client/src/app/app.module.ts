@@ -29,6 +29,7 @@ import { appEffects, appReducers } from './store';
     AuthModule,
     MainModule,
     SharedModule,
+
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot(appEffects),
     StoreDevtoolsModule.instrument({

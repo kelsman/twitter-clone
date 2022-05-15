@@ -9,6 +9,8 @@ export const environment = {
   POST_API_URI: `http://localhost:4000/api`,
   GOOGLE_CLIENT_ID:
     '525983998154-k5sq532ue4d0cv9dmrqelsoapnc6m7og.apps.googleusercontent.com',
+
+  WS_POST: 'http://localhost:4000',
 };
 
 /*
