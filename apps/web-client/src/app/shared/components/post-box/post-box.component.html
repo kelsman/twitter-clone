@@ -6,37 +6,39 @@
 
   <!-- Post Content -->
   <main class="flex flex-col w-full space-y-2">
-    <!-- Name and time -->
-    <div class="flex items-center group text-[#6e767d] justify-between">
-      <div class="flex items-center">
-        <h4
-          class="font-bold text-[15px] sm:text-base text-[#d9d9d9] group-hover:underline mr-0.5"
-        >
-          {{ (post.author | authUser).name }}
-        </h4>
-        <span class="mr-2">@{{ (post.author | authUser)?.username }} </span>
-        <span class="text-sm">{{ post.createdAt | dateAgo }}</span>
+    <div class="cursor-pointer" (click)="goToPost()">
+      <!-- Name and time -->
+      <div class="flex items-center group text-[#6e767d] justify-between">
+        <div class="flex items-center">
+          <h4
+            class="font-bold text-[15px] sm:text-base text-[#d9d9d9] group-hover:underline mr-0.5"
+          >
+            {{ (post.author | authUser).name }}
+          </h4>
+          <span class="mr-2">@{{ (post.author | authUser)?.username }} </span>
+          <span class="text-sm">{{ post.createdAt | dateAgo }}</span>
+        </div>
+        <div class="icon">
+          <ng-icon name="hero-dots-horizontal" size="22"></ng-icon>
+        </div>
       </div>
-      <div class="icon">
-        <ng-icon name="hero-dots-horizontal" size="22"></ng-icon>
-      </div>
+      <!-- Post text if any  -->
+      <!-- Todo: add a check to see if the post has a text -->
+      <p class="text-[#d9d9d9] mt-0.5 text-xl">
+        {{ post.content }}
+      </p>
+
+      <!-- Post Image if Any -->
+
+      <ng-container *ngIf="hasPostMedia">
+        <img
+          *ngFor="let media of post.postMedia"
+          class="rounded-2xl max-h-[450px] object-cover mr-2"
+          alt="media"
+          [src]="media.url"
+        />
+      </ng-container>
     </div>
-    <!-- Post text if any  -->
-    <!-- Todo: add a check to see if the post has a text -->
-    <p class="text-[#d9d9d9] mt-0.5 text-xl">
-      {{ post.content }}
-    </p>
-
-    <!-- Post Image if Any -->
-
-    <ng-container *ngIf="hasPostMedia">
-      <img
-        *ngFor="let media of post.postMedia"
-        class="rounded-2xl max-h-[450px] object-cover mr-2"
-        alt="media"
-        [src]="media.url"
-      />
-    </ng-container>
 
     <!-- Icons Group -->
     <section class="w-full">

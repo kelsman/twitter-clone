@@ -10,15 +10,27 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@project/core": ["libs/core/src/index.ts"],
-      "@project/dto": ["libs/dto/src/index.ts"],
-      "@project/schemas": ["libs/schemas/src/index.ts"]
+      "@project/core": [
+        "libs/core/src/index.ts"
+      ],
+      "@project/dto": [
+        "libs/dto/src/index.ts"
+      ],
+      "@project/schemas": [
+        "libs/schemas/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

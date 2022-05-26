@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthUser, Post } from '@project/core';
 import { Subject, takeUntil } from 'rxjs';
@@ -20,7 +21,7 @@ export class PostBoxComponent implements OnInit, OnDestroy {
   get hasPostMedia() {
     return this.post.postMedia.length > 0;
   }
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -39,5 +40,14 @@ export class PostBoxComponent implements OnInit, OnDestroy {
     } else {
       this.store.dispatch(PostActions.likePost({ postId: this.post._id }));
     }
+  }
+
+  goToPost() {
+    this.router.navigate([
+      '/',
+      (this.post.author as AuthUser).username,
+      'status',
+      this.post._id,
+    ]);
   }
 }

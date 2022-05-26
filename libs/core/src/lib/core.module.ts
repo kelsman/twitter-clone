@@ -4,7 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtAuthGuard } from './guards';
 import { ParseObjectIdPipe } from './pipes';
-import { FileService } from './services/file.service';
+import { FileService } from './services';
 import { JwtStrategy } from './strategy';
 
 @Module({

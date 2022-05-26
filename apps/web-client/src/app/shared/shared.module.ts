@@ -15,12 +15,12 @@ import { InputComponent } from './components/input/input.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { PostBoxComponent } from './components/post-box/post-box.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 import { WidgetsComponent } from './components/widgets/widgets.component';
 import { HeroIconsImportList } from './models';
-import { SafeUrlPipe } from './pipes/safe-url.pipe';
-import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 import { AuthUserPipe } from './pipes/auth-user.pipe';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   imports: [

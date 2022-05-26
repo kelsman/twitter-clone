@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'api-email',
+  displayName: 'email',
   preset: '../../jest.preset.ts',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/api-email',
+  coverageDirectory: '../../coverage/apps/email',
 };

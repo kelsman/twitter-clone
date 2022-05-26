@@ -9,6 +9,7 @@
       "outputs": [
         "{options.outputPath}"
       ],
+      "generatePackageJson": true,
       "options": {
         "outputPath": "dist/apps/web-client",
         "index": "apps/web-client/src/index.html",

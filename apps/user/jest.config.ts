@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'api-auth',
+  displayName: 'user',
   preset: '../../jest.preset.ts',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/api-auth',
+  coverageDirectory: '../../coverage/apps/user',
 };

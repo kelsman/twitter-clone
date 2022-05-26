@@ -1,5 +1,6 @@
 import { FeatherPlay, FeatherRepeat } from '@ng-icons/feather-icons';
 import {
+  HeroArrowLeft,
   HeroBell,
   HeroBookmark,
   HeroCalendar,
@@ -44,4 +45,5 @@ export const HeroIconsImportList = {
   HeroChevronDown,
   FeatherRepeat,
   FeatherPlay,
+  HeroArrowLeft,
 };

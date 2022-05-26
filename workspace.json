@@ -1,13 +1,13 @@
 {
   "version": 2,
   "projects": {
-    "api-auth": "apps/api-auth",
-    "api-email": "apps/api-email",
-    "api-post": "apps/api-post",
-    "api-user": "apps/api-user",
+    "auth": "apps/auth",
     "core": "libs/core",
     "dto": "libs/dto",
+    "email": "apps/email",
+    "post": "apps/post",
     "schemas": "libs/schemas",
+    "user": "apps/user",
     "web-client": "apps/web-client",
     "web-client-e2e": "apps/web-client-e2e"
   }
